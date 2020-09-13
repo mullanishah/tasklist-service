@@ -51,10 +51,23 @@ public class TasklistDaoImpl implements TasklistDao {
 
 	@Override
 	public Task getTask(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		Task task = null;
+		try {
+			pst_getTaskById.setLong(1, id);
+			ResultSet rst = pst_getTaskById.executeQuery();
+			while(rst.next()) {
+				task = new Task();
+				task.setId(rst.getLong("task_id"));
+				task.setTitle(rst.getString("task_title"));
+				task.setDescription(rst.getNString("task_description"));
+				task.setCategory(rst.getString("task_category"));
+				task.setInsertDate(rst.getTimestamp("insert_date"));
+				task.setStatus(rst.getString("task_status"));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		} 
+		return task;
 	}
-
-	
 
 }

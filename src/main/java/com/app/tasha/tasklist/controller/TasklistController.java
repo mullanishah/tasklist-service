@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,5 +31,11 @@ public class TasklistController {
 	public ResponseEntity<String> testApi(){
 		return ResponseEntity.ok("Hello from boot");
 	}
-
+	
+	@RequestMapping(method = RequestMethod.GET, value = "task/{id}")
+	public ResponseEntity<Task> getTaskDetail(@RequestHeader Map<String, String> requestHeaders,
+											  @PathVariable("id") long id) {
+		Task task = tasklistService.getTask(id);
+		return new ResponseEntity<Task>(task, HttpStatus.OK);
+	}
 }

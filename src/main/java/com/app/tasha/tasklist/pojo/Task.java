@@ -10,6 +10,7 @@ public class Task {
 	private String description;
 	private String category;
 	private Timestamp insertDate;
+	private String formattedTime;
 	private String status;
 	
 	public Task() {
@@ -73,10 +74,18 @@ public class Task {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	public String getFormattedTime() {
+		return formattedTime;
+	}
+
+	public void setFormattedTime(String formattedTime) {
+		this.formattedTime = formattedTime;
+	}
 
 	@Override
 	public String toString() {
-		return "Task [id=" + id + ", title=" + title + ", description=" + description + ", insertDate=" + insertDate
-				+ ", status=" + status + "]";
+		return "Task [id=" + id + ", title=" + title + ", description=" + description + ", category=" + category
+				+ ", insertDate=" + insertDate + ", formattedTime=" + formattedTime + ", status=" + status + "]";
 	}
 }

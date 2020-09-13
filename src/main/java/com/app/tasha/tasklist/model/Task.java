@@ -1,6 +1,6 @@
-package com.app.tasha.tasklist.pojo;
+package com.app.tasha.tasklist.model;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 import lombok.Data;
 
 @Data
@@ -9,15 +9,15 @@ public class Task {
 	private String title;
 	private String description;
 	private String category;
-	private Timestamp insertDate;
-	private String formattedTime;
+	private Date insertDate;
+	private String insertDateFormatted;
 	private String status;
 	
 	public Task() {
 		
 	}
 
-	public Task(Long id, String title, String description, String category, Timestamp insertDate, String status) {
+	public Task(Long id, String title, String description, String category, Date insertDate, String status) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -59,12 +59,20 @@ public class Task {
 		this.category = category;
 	}
 
-	public Timestamp getInsertDate() {
+	public Date getInsertDate() {
 		return insertDate;
 	}
 
-	public void setInsertDate(Timestamp insertDate) {
+	public void setInsertDate(Date insertDate) {
 		this.insertDate = insertDate;
+	}
+
+	public String getInsertDateFormatted() {
+		return insertDateFormatted;
+	}
+
+	public void setInsertDateFormatted(String insertDateFormatted) {
+		this.insertDateFormatted = insertDateFormatted;
 	}
 
 	public String getStatus() {
@@ -74,18 +82,10 @@ public class Task {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	public String getFormattedTime() {
-		return formattedTime;
-	}
-
-	public void setFormattedTime(String formattedTime) {
-		this.formattedTime = formattedTime;
-	}
 
 	@Override
 	public String toString() {
 		return "Task [id=" + id + ", title=" + title + ", description=" + description + ", category=" + category
-				+ ", insertDate=" + insertDate + ", formattedTime=" + formattedTime + ", status=" + status + "]";
+				+ ", insertDateFormatted=" + insertDateFormatted + ", status=" + status + "]";
 	}
 }

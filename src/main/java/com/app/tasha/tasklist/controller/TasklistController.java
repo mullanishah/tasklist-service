@@ -2,7 +2,6 @@ package com.app.tasha.tasklist.controller;
 
 import java.util.List;
 import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,14 +59,17 @@ public class TasklistController {
 	@RequestMapping(method = RequestMethod.PUT, value = "task")
 	public ResponseEntity<List<Task>> updateTask(@RequestHeader Map<String, String> requestHeaders,
 			 			   @RequestBody List<Task> tasklist) throws Exception{
-		LOG.info("event=UPDATE_TASK_AND_RETURN_UPDATED_TASK, TTASK_ID= " + tasklist.get(0).getId());
+		LOG.info("event=UPDATE_TASK_AND_RETURN_UPDATED_TASK, TASK_ID= " + tasklist.get(0).getId());
 		List<Task> tasks = tasklistService.updateTask(tasklist);
 		return new ResponseEntity<List<Task>>(tasks, HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.DELETE, value = "")
+	@RequestMapping(method = RequestMethod.DELETE, value = "task/delete")
 	public ResponseEntity<Object> deleteTask(@RequestHeader Map<String, String> requestHeaders, 
-											 @RequestParam(value = "taskId", required = true) long taskId) {
-		return null;
+											 @RequestParam(value = "taskId", required = true) long taskId,
+											 @RequestBody(required = true) Task task) {
+		LOG.info("event=DELETE_TASK_AND_RETURN_STATUS, TASK_ID= " + task.getId());
+		String deleteStatus = tasklistService.deleteTask(task);
+		return new ResponseEntity<Object>(deleteStatus, HttpStatus.OK);
 	}
 }

@@ -2,10 +2,8 @@ package com.app.tasha.tasklist.service;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.app.tasha.tasklist.dao.TasklistDao;
 import com.app.tasha.tasklist.model.Task;
 import com.app.tasha.tasklist.utils.TasklistUtils;
@@ -52,6 +50,12 @@ public class TasklistServiceImpl implements TasklistService {
 			tasks.add(taskDetail);
 		});
 		return tasks;
+	}
+
+	@Override
+	public String deleteTask(Task task) {
+		String status = tasklistDao.deleteTask(task.getId());
+		return status;
 	}
 
 }

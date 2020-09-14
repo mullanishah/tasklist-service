@@ -3,6 +3,7 @@ package com.app.tasha.tasklist.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,7 +16,7 @@ import com.app.tasha.tasklist.utils.TasklistConstants;
 public class TasklistDaoImpl implements TasklistDao {
 	
 	private Connection connection;
-	private PreparedStatement pst_getAllTasks, pst_getTaskById, pst_createTask, pst_updateTask;
+	private PreparedStatement pst_getAllTasks, pst_getTaskById, pst_createTask, pst_updateTask, pst_deleteTask;
 	
 	public TasklistDaoImpl() throws Exception {
 		connection = DatabaseUtils.getConnection();
@@ -23,9 +24,12 @@ public class TasklistDaoImpl implements TasklistDao {
 		pst_getTaskById = connection.prepareStatement(TasklistConstants.GET_TASK_BY_ID);
 		pst_createTask = connection.prepareStatement(TasklistConstants.CREATE_TASK, Statement.RETURN_GENERATED_KEYS);
 		pst_updateTask = connection.prepareStatement(TasklistConstants.UPDATE_TASK, Statement.RETURN_GENERATED_KEYS);
+		pst_deleteTask = connection.prepareStatement(TasklistConstants.DELETE_TASK);
 	}
 	
 	public void cleanUp() throws Exception {
+		if(null != pst_deleteTask)
+			pst_deleteTask.close();
 		if(null != pst_createTask)
 			pst_createTask.close();
 		if(null != pst_updateTask)
@@ -37,7 +41,8 @@ public class TasklistDaoImpl implements TasklistDao {
 		if(connection != null)
 			connection.close();
 	}
-
+	
+	/*---- --CRUD Methods-- ----*/
 	@Override
 	public Collection<Task> getAllTasks() throws Exception {
 		Collection<Task> taskCollection = new ArrayList<Task>();
@@ -121,6 +126,25 @@ public class TasklistDaoImpl implements TasklistDao {
 			e.printStackTrace();
 		}
 		return task;
+	}
+
+	@Override
+	public String deleteTask(long id) {
+		String deleteResult = null;
+		try {
+			pst_deleteTask.setLong(1, id);
+			int status = pst_deleteTask.executeUpdate();
+			if(status == 1)
+				deleteResult = "Record deleted successfully";
+			else
+				deleteResult = "Error occurred while deleting record";
+		}catch (Exception e) {
+			if (e instanceof SQLException) 
+				e.printStackTrace();
+			else
+				e.printStackTrace();
+		}
+		return deleteResult;
 	}
 
 }

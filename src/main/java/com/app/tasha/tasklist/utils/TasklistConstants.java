@@ -12,5 +12,7 @@ public class TasklistConstants {
 	public static String UPDATE_TASK = "update task set task_title=?, task_description=?, task_category=?, "
 								+ "insert_date=?, task_status=? where task_id=?";
 	
+	public static String DELETE_TASK = "delete from task where task_id=?";
+	
 	public static String DATE_FORMAT = "dd/MM/yyyy";
 }

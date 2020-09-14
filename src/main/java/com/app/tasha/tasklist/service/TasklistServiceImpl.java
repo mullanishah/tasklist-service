@@ -1,6 +1,5 @@
 package com.app.tasha.tasklist.service;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class TasklistServiceImpl implements TasklistService {
 	public List<Task> getAllTasks() throws Exception {
 		List<Task> tasklist = (List<Task>) tasklistDao.getAllTasks();
 		tasklist.forEach(task -> {
-			task.setInsertDateFormatted(TasklistUtils.formatInsertDate(task.getInsertDate()));
+			task.setInsertDateUI(TasklistUtils.formatInsertDate(task.getInsertDate()));
 		});
 		return tasklist;
 	}
@@ -29,7 +28,7 @@ public class TasklistServiceImpl implements TasklistService {
 	@Override
 	public Task getTask(Long taskId) throws Exception {
 		Task task = tasklistDao.getTask(taskId);
-		task.setInsertDateFormatted(TasklistUtils.formatInsertDate(task.getInsertDate()));
+		task.setInsertDateUI(TasklistUtils.formatInsertDate(task.getInsertDate()));
 		return task;
 	}
 	
@@ -37,9 +36,8 @@ public class TasklistServiceImpl implements TasklistService {
 	public List<Task> createTask(List<Task> tasklist) throws Exception {
 		List<Task> tasks = new ArrayList<Task>(); 
 		tasklist.forEach(task -> {
-			//task.setInsertDate(TasklistUtils.parseInsertDate(task.getInsertDateFormatted()));
-			task.setInsertDate(new Date(System.currentTimeMillis()));
 			Task taskDetail = tasklistDao.createTask(task);
+			taskDetail.setInsertDateUI(TasklistUtils.formatInsertDate(task.getInsertDate()));
 			tasks.add(taskDetail);
 		});
 		return tasks;
@@ -47,9 +45,10 @@ public class TasklistServiceImpl implements TasklistService {
 
 	@Override
 	public List<Task> updateTask(List<Task> tasklist) throws Exception {
-		List<Task> tasks = new ArrayList<Task>(); 
+		List<Task> tasks = new ArrayList<Task>();  
 		tasklist.forEach(task -> {
 			Task taskDetail = tasklistDao.updateTask(task);
+			taskDetail.setInsertDateUI(TasklistUtils.formatInsertDate(task.getInsertDate()));
 			tasks.add(taskDetail);
 		});
 		return tasks;

@@ -10,7 +10,7 @@ public class Task {
 	private String description;
 	private String category;
 	private Date insertDate;
-	private String insertDateFormatted;
+	private String insertDateUI;
 	private String status;
 	
 	public Task() {
@@ -67,12 +67,12 @@ public class Task {
 		this.insertDate = insertDate;
 	}
 
-	public String getInsertDateFormatted() {
-		return insertDateFormatted;
+	public String getInsertDateUI() {
+		return insertDateUI;
 	}
 
-	public void setInsertDateFormatted(String insertDateFormatted) {
-		this.insertDateFormatted = insertDateFormatted;
+	public void setInsertDateUI(String insertDateUI) {
+		this.insertDateUI = insertDateUI;
 	}
 
 	public String getStatus() {
@@ -86,6 +86,6 @@ public class Task {
 	@Override
 	public String toString() {
 		return "Task [id=" + id + ", title=" + title + ", description=" + description + ", category=" + category
-				+ ", insertDateFormatted=" + insertDateFormatted + ", status=" + status + "]";
+				+ ", insertDateUI=" + insertDateUI + ", status=" + status + "]";
 	}
 }

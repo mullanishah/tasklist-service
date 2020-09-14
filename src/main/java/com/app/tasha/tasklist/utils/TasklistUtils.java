@@ -1,7 +1,6 @@
 package com.app.tasha.tasklist.utils;
 
 import java.sql.Date;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class TasklistUtils {
@@ -12,6 +11,7 @@ public class TasklistUtils {
 		return formattedDate;
 	}
 	
+	/*  TODO: parsed date
 	public static Date parseInsertDate(String insertDate) {
 		Date parsedDate = null;
 		try {
@@ -21,6 +21,6 @@ public class TasklistUtils {
 			e.printStackTrace();
 		}
 		return parsedDate;
-	}
+	}*/
 
 }

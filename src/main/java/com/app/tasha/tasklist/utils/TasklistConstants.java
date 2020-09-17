@@ -14,5 +14,13 @@ public class TasklistConstants {
 	
 	public static String DELETE_TASK = "delete from task where task_id=?";
 	
+	public static String GET_TASKS_BY_STATUS = "Select * from task where task_status=?";
+	
+	public static String GET_TASKS_BY_DATE = "Select * from task where insert_date = ?";
+	
 	public static String DATE_FORMAT = "dd/MM/yyyy";
+	
+	public static String TASK_STATUS_PENDING = "pending";
+	
+	public static String TASK_STATUS_COMPLETE = "COMPLETE";
 }

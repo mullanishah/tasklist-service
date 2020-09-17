@@ -14,4 +14,10 @@ public interface TasklistService {
 	 public List<Task> updateTask(List<Task> tasklist) throws Exception;
 	 
 	 public String deleteTask(Task task);
+	 
+	 public List<Task> getPendingTasks();
+		
+	public List<Task> getCompletedTasks();
+		
+	public List<Task> getTasksByDate(String insertDate);
 }

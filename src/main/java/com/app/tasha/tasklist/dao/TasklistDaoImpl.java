@@ -1,12 +1,14 @@
 package com.app.tasha.tasklist.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import org.springframework.stereotype.Repository;
 import com.app.tasha.tasklist.model.Task;
 import com.app.tasha.tasklist.utils.DatabaseUtils;
@@ -16,7 +18,8 @@ import com.app.tasha.tasklist.utils.TasklistConstants;
 public class TasklistDaoImpl implements TasklistDao {
 	
 	private Connection connection;
-	private PreparedStatement pst_getAllTasks, pst_getTaskById, pst_createTask, pst_updateTask, pst_deleteTask;
+	private PreparedStatement pst_getAllTasks, pst_getTaskById, pst_createTask, pst_updateTask, pst_deleteTask, 
+			pst_pendingTasks, pst_completedTasks, pst_tasksByDate;
 	
 	public TasklistDaoImpl() throws Exception {
 		connection = DatabaseUtils.getConnection();
@@ -25,9 +28,18 @@ public class TasklistDaoImpl implements TasklistDao {
 		pst_createTask = connection.prepareStatement(TasklistConstants.CREATE_TASK, Statement.RETURN_GENERATED_KEYS);
 		pst_updateTask = connection.prepareStatement(TasklistConstants.UPDATE_TASK, Statement.RETURN_GENERATED_KEYS);
 		pst_deleteTask = connection.prepareStatement(TasklistConstants.DELETE_TASK);
+		pst_pendingTasks = connection.prepareStatement(TasklistConstants.GET_TASKS_BY_STATUS);
+		pst_completedTasks = connection.prepareStatement(TasklistConstants.GET_TASKS_BY_STATUS);
+		pst_tasksByDate = connection.prepareStatement(TasklistConstants.GET_TASKS_BY_DATE);
 	}
 	
 	public void cleanUp() throws Exception {
+		if(null != pst_tasksByDate)
+			pst_tasksByDate.close();
+		if(null != pst_completedTasks)
+			pst_completedTasks.close();
+		if(null != pst_pendingTasks)
+			pst_pendingTasks.close();
 		if(null != pst_deleteTask)
 			pst_deleteTask.close();
 		if(null != pst_createTask)
@@ -145,6 +157,54 @@ public class TasklistDaoImpl implements TasklistDao {
 				e.printStackTrace();
 		}
 		return deleteResult;
+	}
+
+	@Override
+	public List<Task> getPendingTasks(String status) {
+		List<Task> tasksFromDB = new ArrayList<Task>();
+		try {
+			pst_pendingTasks.setString(1, status);
+			ResultSet rst = pst_pendingTasks.executeQuery();
+			while(rst.next()) {
+				tasksFromDB.add(new Task(rst.getLong(1), rst.getString(2), rst.getString(3), 
+						rst.getString(4), rst.getDate(5), rst.getString(6)));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return tasksFromDB;
+	}
+
+	@Override
+	public List<Task> getCompletedTasks(String status) {
+		List<Task> tasksFromDB = new ArrayList<Task>();
+		try {
+			pst_completedTasks.setString(1, status);
+			ResultSet rst = pst_completedTasks.executeQuery();
+			while(rst.next()) {
+				tasksFromDB.add(new Task(rst.getLong(1), rst.getString(2), rst.getString(3), 
+						rst.getString(4), rst.getDate(5), rst.getString(6)));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return tasksFromDB;
+	}
+
+	@Override
+	public List<Task> getTasksByDate(Date date) {
+		List<Task> tasksFromDB = new ArrayList<Task>();
+		try {
+			pst_tasksByDate.setDate(1, date);
+			ResultSet rst = pst_tasksByDate.executeQuery();
+			while(rst.next()) {
+				tasksFromDB.add(new Task(rst.getLong(1), rst.getString(2), rst.getString(3), 
+						rst.getString(4), rst.getDate(5), rst.getString(6)));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return tasksFromDB;
 	}
 
 }

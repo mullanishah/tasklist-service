@@ -3,7 +3,6 @@ package com.app.tasha.tasklist.service;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpMethod;
-
 import com.app.tasha.tasklist.dao.TasklistDao;
 import com.app.tasha.tasklist.model.Task;
 import com.app.tasha.tasklist.utils.TasklistConstants;

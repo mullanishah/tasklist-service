@@ -1,7 +1,8 @@
 package com.app.tasha.tasklist.utils;
 
 public class TasklistConstants {
-
+	
+	// ------------------- DB Queries ------------------- // 
 	public static String GET_ALL_TASKS = "Select * from task";
 	
 	public static String GET_TASK_BY_ID = "Select * from task where task_id = ?";
@@ -20,7 +21,15 @@ public class TasklistConstants {
 	
 	public static String DATE_FORMAT = "dd/MM/yyyy";
 	
-	public static String TASK_STATUS_PENDING = "pending";
+	// ------------------- Task Status ------------------- // 
+	public static String TASK_STATUS_NEW = "NEW";
+	
+	public static String TASK_STATUS_PENDING = "PENDING";
 	
 	public static String TASK_STATUS_COMPLETE = "COMPLETE";
+	
+	// ------------------- Task Delete ------------------- //
+	public static String TASK_DELETE_SUCCESS = "Record deleted successfully";
+	
+	public static String TASK_DELETE_FAILURE = "Error occurred while deleting record";
 }

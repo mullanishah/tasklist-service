@@ -5,4 +5,6 @@ Spring boot application for managing task list
 - Create a Task
 - Update Task
 - Delete Task 
-
+- Get Pending Tasks
+- Get Completed Tasks
+- Get Tasks by date

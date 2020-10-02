@@ -2,6 +2,7 @@ package com.app.tasha.tasklist.controller;
 
 import java.util.List;
 import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.app.tasha.tasklist.model.Task;
 import com.app.tasha.tasklist.service.TasklistService;
 
@@ -36,16 +38,19 @@ public class TasklistController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "task/{id}")
-	public ResponseEntity<Task> getTaskDetail(@RequestHeader Map<String, String> requestHeaders,
-								@PathVariable("id") long id) throws Exception{
+	public ResponseEntity<Object> getTaskDetail(@RequestHeader Map<String, String> requestHeaders,
+								@PathVariable("id") Long id) throws Exception{
 		
 		LOG.info("event=FETCH_TASK_ON_TASK_ID, TASK_ID= " + id);
+		if(id == null) {
+			return new ResponseEntity<Object>("Tasklist Id should not be null", HttpStatus.OK);
+		}
 		Task task = tasklistService.getTask(id);
-		return new ResponseEntity<Task>(task, HttpStatus.OK);
+		return new ResponseEntity<Object>(task, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "task")
-	private ResponseEntity<List<Task>> createTask(@RequestHeader Map<String, String> requestHeaders,
+	public ResponseEntity<List<Task>> createTask(@RequestHeader Map<String, String> requestHeaders,
 								@RequestBody List<Task> tasklist) throws Exception{
 		
 		LOG.info("event=CREATE_TASK_AND_RETURN_WITH_GENERATED_ID, TASK_ID= " + tasklist.get(0).getId());

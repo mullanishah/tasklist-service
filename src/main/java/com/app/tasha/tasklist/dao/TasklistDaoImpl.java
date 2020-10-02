@@ -147,9 +147,9 @@ public class TasklistDaoImpl implements TasklistDao {
 			pst_deleteTask.setLong(1, id);
 			int status = pst_deleteTask.executeUpdate();
 			if(status == 1)
-				deleteResult = "Record deleted successfully";
+				deleteResult = TasklistConstants.TASK_DELETE_SUCCESS;
 			else
-				deleteResult = "Error occurred while deleting record";
+				deleteResult = TasklistConstants.TASK_DELETE_FAILURE;
 		}catch (Exception e) {
 			if (e instanceof SQLException) 
 				e.printStackTrace();
